@@ -1,0 +1,32 @@
+{
+  "name": "curly-potato",
+  "version": "1.0.0",
+  "description": "MERN app to exercise",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist\\index.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JimmyRitter/curly-potato.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JimmyRitter/curly-potato/issues"
+  },
+  "homepage": "https://github.com/JimmyRitter/curly-potato#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.11.19",
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.5"
+  }
+}
