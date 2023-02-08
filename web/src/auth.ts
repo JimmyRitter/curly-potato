@@ -1,13 +1,9 @@
 export const fakeAuthProvider = {
-    signin: (callback: VoidFunction) => {
-      setTimeout(() => {
+    signIn: (callback: VoidFunction) => {
         callback();
-      }, 1000);
     },
-    signout: (callback: VoidFunction) => {
-      setTimeout(() => {
+    signOut: (callback: VoidFunction) => {
         callback();
-      }, 1000);
     }
   };
   
