@@ -43,13 +43,12 @@ const LoginPage = () => {
   let location = useLocation();
   let auth = useAuth();
 
-  debugger;
   let from = location.state?.from?.pathname || "/";
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    auth.signin(username, () => {
+    auth.signIn(username, () => {
       // Send them back to the page they tried to visit when they were
       // redirected to the login page. Use { replace: true } so we don't create
       // another entry in the history stack for the login page.  This means that

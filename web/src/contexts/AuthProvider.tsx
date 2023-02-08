@@ -9,21 +9,21 @@ interface Props {
 function AuthProvider({ children }: { children: React.ReactNode }) {
   let [user, setUser] = React.useState<any>(null);
 
-  let signin = (newUser: string, callback: VoidFunction) => {
-    return fakeAuthProvider.signin(() => {
+  let signIn = (newUser: string, callback: VoidFunction) => {
+    return fakeAuthProvider.signIn(() => {
       setUser(newUser);
       callback();
     });
   };
 
-  let signout = (callback: VoidFunction) => {
-    return fakeAuthProvider.signout(() => {
+  let signOut = (callback: VoidFunction) => {
+    return fakeAuthProvider.signOut(() => {
       setUser(null);
       callback();
     });
   };
 
-  let value = { user, signin, signout };
+  let value = { user, signIn, signOut };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
