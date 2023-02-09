@@ -1,60 +1,44 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import styled from "styled-components";
 import useAuth from "../hooks/useAuth";
+import {
+  Container,
+  Main,
+  Nav,
+  NavLink,
+  LinksLeftSection,
+  LinksRightSection,
+  WelcomeUserText,
+} from "./Layout.style";
 
-const Container = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
+const SignedInNavItems = ({ username }: { username: string }) => {
+  return (
+    <>
+      <LinksLeftSection>
+        <NavLink to={"/"}>Home</NavLink>
+        <NavLink to={"/account"}>My Account</NavLink>
+      </LinksLeftSection>
+      <LinksRightSection>
+        <WelcomeUserText>Welcome, {username}</WelcomeUserText>
+        <NavLink to={"/signout"}>Sign Out</NavLink>
+      </LinksRightSection>
+    </>
+  );
+};
 
-const Nav = styled.nav`
-  background-color: lightgray;
-  height: 50px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0;
-`;
-
-const NavLink = styled(Link)`
-  margin-right: 20px;
-  color: black;
-  text-decoration: none;
-`;
-
-const Main = styled.main`
-  flex: 1;
-  background-color: lightgreen;
-  padding-top: 50px;
-`;
-
-interface Link {
-  to: string;
-  text: string;
-}
-
-const links: Link[] = [
-  {
-    to: "/",
-    text: "Home",
-  },
-  {
-    to: "/login",
-    text: "Login",
-  },
-  {
-    to: "/signup",
-    text: "Sign Up",
-  },
-  {
-    to: "/account",
-    text: "My Account",
-  },
-];
+const SignedOutNavItems = () => {
+  return (
+    <>
+      <LinksLeftSection>
+        <NavLink to={"/"}>Home</NavLink>
+      </LinksLeftSection>
+      <LinksRightSection>
+        <NavLink to={"/login"}>Sign In</NavLink>
+        <NavLink to={"/signup"}>Sign Up</NavLink>
+      </LinksRightSection>
+    </>
+  );
+};
 
 const Layout = () => {
   let auth = useAuth();
@@ -62,11 +46,11 @@ const Layout = () => {
     <>
       <Container>
         <Nav>
-          <NavLink to={"/"}>Home</NavLink>
-          {!auth.user ? <NavLink to={"/login"}>Sign In</NavLink> : null}
-          {!auth.user ? <NavLink to={"/signup"}>Sign Up</NavLink> : null}
-          {auth.user ? <NavLink to={"/account"}>My Account</NavLink> : null}
-          {auth.user ? <NavLink to={"/signout"}>Sign Out</NavLink> : null}
+          {auth.user ? (
+            <SignedInNavItems username={auth.user} />
+          ) : (
+            <SignedOutNavItems />
+          )}
         </Nav>
         <Main>
           <Outlet />
