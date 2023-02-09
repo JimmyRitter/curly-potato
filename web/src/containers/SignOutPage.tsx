@@ -7,7 +7,7 @@ const Message = styled.h1`
   margin-top: 20px;
 `;
 
-const SignOutPage: React.FC = () => {
+const SignOutPage = () => {
   let auth = useAuth();
   auth.signOut(() => console.log("signed out"));
 

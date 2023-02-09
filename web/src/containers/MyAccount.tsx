@@ -1,7 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 
-const MyAccount: React.FC = () => {
+const MyAccount = () => {
   return <h1>My account</h1>;
 };
 

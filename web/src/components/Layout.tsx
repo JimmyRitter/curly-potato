@@ -33,7 +33,7 @@ const SignedOutNavItems = () => {
         <NavLink to={"/"}>Home</NavLink>
       </LinksLeftSection>
       <LinksRightSection>
-        <NavLink to={"/login"}>Sign In</NavLink>
+        <NavLink to={"/signin"}>Sign In</NavLink>
         <NavLink to={"/signup"}>Sign Up</NavLink>
       </LinksRightSection>
     </>

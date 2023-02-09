@@ -35,7 +35,7 @@ const Button = styled.button`
   }
 `;
 
-const LoginPage = () => {
+const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -73,9 +73,9 @@ const LoginPage = () => {
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button type="submit">Login</Button>
+      <Button type="submit">Sign In</Button>
     </Form>
   );
 };
 
-export default LoginPage;
+export default SignInPage;

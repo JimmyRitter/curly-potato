@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Home: React.FC = () => {
+const Home = () => {
   return <h1>Welcome to my friendly home page!</h1>;
 };
 
