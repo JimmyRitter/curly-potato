@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Program",
+        "program": "${workspaceFolder}/api/dist/index.js",
+        "sourceMaps": true,
+        "outFiles": ["${workspaceFolder}/api/dist/**/*.js"],
+        "preLaunchTask": "npm: build - api",
+        "envFile": "${workspaceFolder}/api/.env"
+      }
+    ]
+  }
