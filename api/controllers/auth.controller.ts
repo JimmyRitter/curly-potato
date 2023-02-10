@@ -1,41 +1,53 @@
 import { Request, Response } from "express";
-import crypto from "crypto";
-import { connectToDb, closeDbConnection } from "../services/db.service";
+import { AuthService } from "../services";
+import { Utils } from "../utils";
 
-export const signUp = async (req: Request, res: Response) => {
-  console.log(req.body);
+const signUp = async (req: Request, res: Response) => {
   try {
-    const { client, db } = await connectToDb();
+    const { email } = req.body;
 
-    console.log("connected to db", db);
-    console.log("client", client);
+    const errorMessage = await validateSignUp(email);
+    if (errorMessage) return res.status(400).json({ error: errorMessage });
 
-    const { email, password } = req.body;
-
-    const passwordHash = crypto
-      .createHash("sha256")
-      .update(password)
-      .digest("hex");
-
-    const user = {
-      email,
-      password: passwordHash,
-    };
-
-    // const db = dbService.getDb();
-    await db.collection("users").insertOne(user);
-    return res.json({ user });
-
-    // Save the user to the database
-    // User.create(user, (error, user) => {
-    // if (error) {
-    // return res.status(400).json({ error });
-    // }
-    return res.json({ user });
-    // });
+    await AuthService.signUp(req);
+    return res.json("success");
   } catch (error) {
     return res.json(error);
   }
 };
 
-export default { signUp };
+const validateSignUp = async (email: string) => {
+  if (!Utils.isValidEmail(email)) return "Invalid email address.";
+
+  const emailExist = await AuthService.isEmailExists(email);
+  if (emailExist) return "The provided email already exist.";
+
+  return "";
+};
+
+const signIn = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const errorMessage = await validateSignIn(email, password);
+    if (errorMessage) return res.status(400).json({ error: errorMessage });
+
+    const data = await AuthService.signIn(req);
+    return res.json("success");
+  } catch (error) {
+    return res.json(error);
+  }
+};
+
+const validateSignIn = async (email: string, password: string) => {
+  const foundByEmailAndPassword = await AuthService.foundByEmailAndPassword(
+    email,
+    password
+  );
+  if (!foundByEmailAndPassword)
+    return "Invalid login credentials, please try again.";
+
+  return "";
+};
+
+export default { signUp, signIn };

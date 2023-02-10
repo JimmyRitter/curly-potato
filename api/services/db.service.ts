@@ -3,7 +3,7 @@ import { dbConfig } from "../config/db";
 
 export const connectToDb = async (): Promise<any> => {
   const client = await MongoClient.connect(dbConfig.connectionString);
-  const db = client.db();
+  const db = client.db(dbConfig.dbName);
 
   return { client, db };
 };
