@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { AuthRoute } from "./routes";
 import cors from "cors";
+import e from "express";
 
 dotenv.config();
 
@@ -19,9 +20,15 @@ const validateEnvVars = () => {
   if (!process.env.PORT) errors.push("PORT");
   if (!process.env.COSMOS_CONNECTION_STRING)
     errors.push("COSMOS_CONNECTION_STRING");
-  console.error(
-    `The following env vars are not configured: ${errors.toString()}`
-  );
+
+  if (errors.length > 0) {
+    console.error(
+      `The following env vars are not configured: ${errors.toString()}`
+    );
+  } else {
+    console.log(process.env.PORT);
+    console.log(process.env.COSMOS_CONNECTION_STRING);
+  }
   // handle what to do in case ENV VARS not configured
 };
 
