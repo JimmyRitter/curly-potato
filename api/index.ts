@@ -12,6 +12,19 @@ app.use(bodyParser.json());
 // Routes
 app.use("/auth", AuthRoute);
 
+const validateEnvVars = () => {
+  const errors = [];
+  if (!process.env.PORT) errors.push("PORT");
+  if (!process.env.COSMOS_CONNECTION_STRING)
+    errors.push("COSMOS_CONNECTION_STRING");
+  console.error(
+    `The following env vars are not configured: ${errors.toString()}`
+  );
+  // handle what to do in case ENV VARS not configured
+};
+
+validateEnvVars();
+
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
