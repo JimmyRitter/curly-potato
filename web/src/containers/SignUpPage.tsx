@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { AuthService } from "../services";
 
 const Form = styled.form`
   display: flex;
@@ -20,25 +21,38 @@ const Input = styled.input`
   font-size: 1rem;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  outline: none;
 
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+`;
 const SignUpPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // perform authentication
+    const retorno = await AuthService.signUp(email, password);
+    console.log(retorno);
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Input
-        type="text"
-        value={username}
-        placeholder="Username"
-        onChange={(e) => setUsername(e.target.value)}
+        type="email"
+        value={email}
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
       />
       <Input
         type="password"
