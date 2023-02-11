@@ -1,4 +1,5 @@
-const baseUrl = "http://localhost:8080/auth";
+const baseUrl = `${import.meta.env.VITE_API_URL}/auth`;
+console.log(baseUrl);
 
 const signUp = async (email: string, password: string) => {
   const rawResponse = await fetch(`${baseUrl}/signup`, {

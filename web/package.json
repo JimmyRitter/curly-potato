@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "set NODE_ENV=local && vite",
     "build": "tsc && vite build",
+    "build:prod": "export NODE_ENV=prod && tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^18.13.0",
     "@types/react-router-dom": "^5.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
