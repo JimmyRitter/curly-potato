@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "set NODE_ENV=local && vite",
     "build": "tsc && vite build",
-    "build:prod": "export NODE_ENV=prod && tsc && vite build",
+    "build:prod": "tsc && vite build --mode=production",
     "preview": "vite preview"
   },
   "dependencies": {
