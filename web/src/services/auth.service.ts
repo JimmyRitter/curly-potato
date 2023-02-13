@@ -1,5 +1,6 @@
 const baseUrl = `${import.meta.env.VITE_API_URL}/auth`;
 console.log(baseUrl);
+console.log("vite env", import.meta.env);
 
 const signUp = async (email: string, password: string) => {
   const rawResponse = await fetch(`${baseUrl}/signup`, {
