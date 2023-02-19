@@ -17,6 +17,7 @@ export default defineConfig(({ command, mode }) => {
     // define: {
     //   VITE_API_URL: env.VITE_API_URL,
     // },
-    // root: path.resolve(__dirname, "../web"),
+    root: path.resolve(__dirname, "../web"),
+    configFile: path.resolve(__dirname, "../vite.config.js"),
   };
 });
