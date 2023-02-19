@@ -1,3 +1,4 @@
+const VITE_API_URL = "https://curly-potato-2.azurewebsites.net";
 const baseUrl = `${VITE_API_URL}/auth`;
 
 console.log("VITE_API_URL", VITE_API_URL);
