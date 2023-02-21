@@ -2,7 +2,16 @@ import * as React from "react";
 
 interface AuthContextType {
   user: any;
-  signIn: (user: string, callback: VoidFunction) => void;
+  signIn: (
+    email: string,
+    password: string,
+    callback: (result: any) => void
+  ) => void;
+  signUp: (
+    email: string,
+    password: string,
+    callback: (result: any) => void
+  ) => void;
   signOut: (callback: VoidFunction) => void;
 }
 

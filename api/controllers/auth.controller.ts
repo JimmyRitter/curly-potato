@@ -10,7 +10,7 @@ const signUp = async (req: Request, res: Response) => {
     if (errorMessage) return res.status(400).json({ error: errorMessage });
 
     await AuthService.signUp(req);
-    return res.json("success");
+    return res.json({ success: "You have signed up successfully" });
   } catch (error) {
     return res.json(error);
   }
@@ -33,7 +33,7 @@ const signIn = async (req: Request, res: Response) => {
     if (errorMessage) return res.status(400).json({ error: errorMessage });
 
     const data = await AuthService.signIn(req);
-    return res.json("success");
+    return res.json({ success: "You have signed in successfully" });
   } catch (error) {
     return res.json(error);
   }

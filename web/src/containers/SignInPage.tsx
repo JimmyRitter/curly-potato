@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import ErrorAlertBox from "../components/ErrorAlert";
 import useAuth from "../hooks/useAuth";
 
 const Form = styled.form`
@@ -36,8 +37,9 @@ const Button = styled.button`
 `;
 
 const SignInPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   let navigate = useNavigate();
   let location = useLocation();
@@ -47,8 +49,13 @@ const SignInPage = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
 
-    auth.signIn(username, () => {
+    auth.signIn(email, password, (result: any) => {
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
       // Send them back to the page they tried to visit when they were
       // redirected to the login page. Use { replace: true } so we don't create
       // another entry in the history stack for the login page.  This means that
@@ -59,22 +66,33 @@ const SignInPage = () => {
     });
   };
 
+  const handleCloseErrorBox = () => setError("");
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        value={username}
-        placeholder="Username"
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <Input
-        type="password"
-        value={password}
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button type="submit">Sign In</Button>
-    </Form>
+    <>
+      {!!error ? (
+        <ErrorAlertBox
+          errors={[error]}
+          title={"Error!"}
+          onClose={handleCloseErrorBox}
+        />
+      ) : null}
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="email"
+          value={email}
+          placeholder="Enter your email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          type="password"
+          value={password}
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="submit">Sign In</Button>
+      </Form>
+    </>
   );
 };
 

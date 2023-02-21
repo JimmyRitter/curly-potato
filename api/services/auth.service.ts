@@ -20,7 +20,7 @@ const signUp = async (req: Request) => {
     };
 
     await db.collection(DbCollections.USERS).insertOne(userData);
-    return "success";
+    return;
   } catch (error) {
     throw error;
   } finally {

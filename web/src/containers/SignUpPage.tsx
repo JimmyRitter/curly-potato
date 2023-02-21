@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ErrorAlertBox from "../components/ErrorAlert";
+import useAuth from "../hooks/useAuth";
 import { AuthService } from "../services";
 
 const Form = styled.form`
@@ -42,18 +44,21 @@ const SignUpPage = () => {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  let auth = useAuth();
+  let navigate = useNavigate();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setError("");
-    try {
-      const result = await AuthService.signUp(email, password);
+
+    auth.signUp(email, password, (result: any) => {
       if (result.error) {
         setError(result.error);
         return;
       }
-    } catch (e) {
-      console.log(e);
-    }
+
+      navigate("/", { replace: true });
+    });
   };
 
   const handleCloseErrorBox = () => setError("");

@@ -1,6 +1,7 @@
 import * as React from "react";
 import AuthContext from "./AuthContext";
 import { fakeAuthProvider } from "../auth";
+import { AuthService } from "../services";
 
 interface Props {
   children: React.ReactNode;
@@ -9,11 +10,28 @@ interface Props {
 function AuthProvider({ children }: { children: React.ReactNode }) {
   let [user, setUser] = React.useState<any>(null);
 
-  let signIn = (newUser: string, callback: VoidFunction) => {
-    return fakeAuthProvider.signIn(() => {
-      setUser(newUser);
-      callback();
-    });
+  let signIn = async (
+    email: string,
+    password: string,
+    callback: (result: string) => void
+  ) => {
+    const result = await AuthService.signIn(email, password);
+    if (result.success) {
+      setUser(email);
+    }
+    callback(result);
+  };
+
+  let signUp = async (
+    email: string,
+    password: string,
+    callback: (result: string) => void
+  ) => {
+    const result = await AuthService.signUp(email, password);
+    if (result.success) {
+      setUser(email);
+    }
+    callback(result);
   };
 
   let signOut = (callback: VoidFunction) => {
@@ -23,7 +41,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  let value = { user, signIn, signOut };
+  let value = { user, signIn, signUp, signOut };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -9,7 +9,9 @@ const Message = styled.h1`
 
 const SignOutPage = () => {
   let auth = useAuth();
-  auth.signOut(() => console.log("signed out"));
+  auth.signOut(() => {
+    return;
+  });
 
   return <Message>You have successfully signed out</Message>;
 };
