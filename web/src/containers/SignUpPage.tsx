@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import ErrorAlertBox from "../components/ErrorAlert";
 import { AuthService } from "../services";
 
 const Form = styled.form`
@@ -39,40 +40,60 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const retorno = await AuthService.signUp(email, password);
-    console.log(retorno);
+    setError("");
+    try {
+      const result = await AuthService.signUp(email, password);
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
+  const handleCloseErrorBox = () => setError("");
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="email"
-        value={email}
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input
-        type="password"
-        value={password}
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Input
-        type="password"
-        value={confirm}
-        placeholder="Confirm Password"
-        onChange={(e) => setConfirm(e.target.value)}
-      />
-      <Button
-        type="submit"
-        disabled={password == "" || confirm == "" || password !== confirm}
-      >
-        Sign Up
-      </Button>
-    </Form>
+    <>
+      {!!error ? (
+        <ErrorAlertBox
+          errors={[error]}
+          title={"Error!"}
+          onClose={handleCloseErrorBox}
+        />
+      ) : null}
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="email"
+          value={email}
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          type="password"
+          value={password}
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Input
+          type="password"
+          value={confirm}
+          placeholder="Confirm Password"
+          onChange={(e) => setConfirm(e.target.value)}
+        />
+        <Button
+          type="submit"
+          disabled={password == "" || confirm == "" || password !== confirm}
+        >
+          Sign Up
+        </Button>
+      </Form>
+    </>
   );
 };
 
