@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/1abe1dfd-53ea-4531-b812-117319228139/AppServices/subscriptions/1abe1dfd-53ea-4531-b812-117319228139/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/curly-potato-2",
-    "appService.deploySubpath": "api"
-}
